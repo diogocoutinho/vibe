@@ -23,6 +23,8 @@ import { Switch } from '~/components/ui/switch'
 import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import AudioVisualizer from './audio-visualizer'
 import ResummarizeDialog from '~/components/resummarize-dialog'
+import SpeakerNames from '~/components/speaker-names'
+import { Users } from 'lucide-react'
 
 export default function Home() {
 	const { t } = useTranslation()
@@ -69,9 +71,20 @@ export default function Home() {
 							</div>
 
 							{!vm.isRecording ? (
-								<Button onMouseDown={() => vm.startRecord()} className="mt-1 w-full" disabled={!vm.preference.modelPath || (!vm.inputDevice && !vm.outputDevice)}>
-									{t('common.start-record')}
-								</Button>
+								<>
+									<Button onMouseDown={() => vm.startRecord()} className="mt-1 w-full" disabled={!vm.preference.modelPath || (!vm.inputDevice && !vm.outputDevice)}>
+										{t('common.start-record')}
+									</Button>
+									<Button
+										variant="outline"
+										onMouseDown={() => vm.startMeeting()}
+										className="w-full"
+										disabled={!vm.preference.modelPath}>
+										<Users className="mr-2 h-4 w-4" />
+										{t('common.meeting-mode')}
+									</Button>
+									<p className="text-center text-xs text-muted-foreground">{t('common.meeting-mode-hint')}</p>
+								</>
 							) : (
 								<Button
 									onMouseDown={() => {
@@ -80,7 +93,7 @@ export default function Home() {
 									}}
 									className="mt-1 w-full bg-success text-success-foreground hover:bg-success/90">
 									<Spinner className="mr-2" />
-									{t('common.stop-and-transcribe')}
+									{vm.meetingMode ? t('common.stop-meeting') : t('common.stop-and-transcribe')}
 								</Button>
 							)}
 
@@ -240,6 +253,14 @@ export default function Home() {
 					</div>
 				)}
 
+				{vm.preference.homeTab === "file" && vm.transcriptTab === 'transcript' && !vm.loading && (
+					<SpeakerNames
+						segments={vm.segments}
+						speakerNames={vm.preference.speakerNames}
+						setSpeakerNames={vm.preference.setSpeakerNames}
+					/>
+				)}
+
 				{vm.preference.homeTab === "file" && (vm.segments || vm.loading) && (
 					<div className="mx-auto flex h-[62vh] min-h-[320px] w-full max-w-4xl min-w-0 flex-col overflow-hidden border-t border-border/55 pt-3">
 						<TextArea
@@ -250,6 +271,7 @@ export default function Home() {
 							setTextFormat={
 								vm.transcriptTab === 'transcript' ? vm.preference.setTextFormatTranscript : vm.preference.setTextFormatSummary
 							}
+							speakerNames={vm.transcriptTab === 'transcript' ? vm.preference.speakerNames : undefined}
 							readonly={vm.loading}
 						/>
 					</div>

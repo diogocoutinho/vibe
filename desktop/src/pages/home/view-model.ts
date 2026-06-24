@@ -46,6 +46,9 @@ export function viewModel() {
 	const [loading, setLoading] = useState(false)
 	const [isRecording, setIsRecording] = useState(false)
 	const abortRef = useRef<boolean>(false)
+	// True while a one-click "Meeting Mode" capture is in flight: forces diarization + AI summary.
+	const meetingModeRef = useRef<boolean>(false)
+	const [meetingMode, setMeetingMode] = useState(false)
 	const [isAborting, setIsAborting] = useState(false)
 	const [segments, setSegments] = useState<transcript.Segment[] | null>(null)
 	const [summarizeSegments, setSummarizeSegments] = useState<transcript.Segment[] | null>(null)
@@ -465,6 +468,83 @@ export function viewModel() {
 		}
 	}
 
+	// One-click "Meeting Mode": captures mic + system audio, then (on stop) transcribes
+	// with speaker diarization and generates an AI summary automatically.
+	async function startMeeting() {
+		if (!preference.modelPath) {
+			await dialog.message(t('common.no-model-selected'), { kind: 'warning' })
+			return
+		}
+
+		// Make sure the diarization model is present (download on first use).
+		try {
+			const modelsFolder = await invoke<string>('get_models_folder')
+			const diarizePath = modelsFolder + '/' + config.diarizeModelFilename
+			if (!(await fs.exists(diarizePath))) {
+				const confirmed = await dialog.ask(t('common.download-diarize-model'), { title: t('common.diarization'), kind: 'info' })
+				if (!confirmed) return
+				toast.setMessage(t('common.downloading-diarize-model'))
+				toast.setOpen(true)
+				toast.setProgress(0)
+				try {
+					await invoke('download_model', { url: config.diarizeModelUrl, path: diarizePath })
+				} finally {
+					toast.setOpen(false)
+					toast.setProgress(null)
+				}
+			}
+		} catch (e) {
+			console.error('meeting diarize setup failed:', e)
+			setErrorModal?.({ log: String(e), open: true })
+			return
+		}
+
+		// Resolve capture devices: microphone (input) + system audio (output) so every
+		// participant on the call is recorded, not just the local speaker.
+		let current = devices
+		if (!current.length) {
+			current = await invoke<AudioDevice[]>('get_audio_devices')
+			setDevices(current)
+		}
+		const input = inputDevice ?? current.find((d) => d.isInput && d.isDefault) ?? current.find((d) => d.isInput) ?? null
+		let output = outputDevice ?? current.find((d) => !d.isInput && d.isDefault) ?? current.find((d) => !d.isInput) ?? null
+
+		if (output) {
+			const permitted = await ensureSystemAudioPermission()
+			if (!permitted) {
+				output = null
+			}
+		}
+
+		const recordDevices: AudioDevice[] = []
+		if (input) recordDevices.push(input)
+		if (output) recordDevices.push(output)
+		if (!recordDevices.length) {
+			await dialog.message(t('common.no-audio-device'), { kind: 'warning' })
+			return
+		}
+		setInputDevice(input)
+		setOutputDevice(output)
+
+		meetingModeRef.current = true
+		setMeetingMode(true)
+		startKeepAwake()
+		setSegments(null)
+		setSummarizeSegments(null)
+		setTranscriptTab('transcript')
+		setIsRecording(true)
+		try {
+			await invoke('start_record', { devices: recordDevices, storeInDocuments: preference.storeRecordInDocuments, customPath: preference.customRecordingPath })
+		} catch (error) {
+			meetingModeRef.current = false
+			setMeetingMode(false)
+			stopKeepAwake()
+			setIsRecording(false)
+			console.error('startMeeting error: ', error)
+			setErrorModal?.({ log: String(error), open: true })
+		}
+	}
+
 	async function transcribe(path: string) {
 		const avx2 = await invoke<boolean>('is_avx2_enabled')
 		if (!avx2) {
@@ -481,6 +561,8 @@ export function viewModel() {
 
 		setLoading(true)
 		abortRef.current = false
+		// Capture meeting-mode intent up-front; the ref is cleared in `finally` before the summary runs.
+		const isMeeting = meetingModeRef.current
 
 		var newSegments: transcript.Segment[] = []
 		trackAnalyticsEvent(analyticsEvents.TRANSCRIBE_STARTED, {
@@ -496,7 +578,7 @@ export function viewModel() {
 				hotToast.warning(t('common.gpu-fallback-to-cpu'), { position: 'bottom-center', duration: 8000 })
 			}
 			let diarize_model: string | undefined
-			if (preferenceRef.current.diarizeEnabled) {
+			if (preferenceRef.current.diarizeEnabled || isMeeting) {
 				const modelsFolder = await invoke<string>('get_models_folder')
 				diarize_model = modelsFolder + '/' + config.diarizeModelFilename
 			}
@@ -558,6 +640,8 @@ export function viewModel() {
 			setLoading(false)
 			setIsAborting(false)
 			setProgress(null)
+			meetingModeRef.current = false
+			setMeetingMode(false)
 			if (!abortRef.current) {
 				// Focus back the window and play sound
 				if (preferenceRef.current.soundOnFinish) {
@@ -570,9 +654,9 @@ export function viewModel() {
 			}
 		}
 
-		if (newSegments && llm && preferenceRef.current.llmConfig?.enabled) {
+		if (newSegments.length && llm && (preferenceRef.current.llmConfig?.enabled || isMeeting)) {
 			try {
-				const question = `${preferenceRef.current.llmConfig.prompt.replace('%s', transcript.asText(newSegments, t('common.speaker-prefix')))}`
+				const question = `${preferenceRef.current.llmConfig.prompt.replace('%s', transcript.asText(newSegments, t('common.speaker-prefix'), preferenceRef.current.speakerNames))}`
 				const answerPromise = llm.ask(question)
 				hotToast.promise(answerPromise, {
 					loading: t('common.summarize-loading'),
@@ -597,7 +681,7 @@ export function viewModel() {
 		if (!segments || !llm) return
 		setSummarizing(true)
 		try {
-			const question = prompt.replace('%s', transcript.asText(segments, t('common.speaker-prefix')))
+			const question = prompt.replace('%s', transcript.asText(segments, t('common.speaker-prefix'), preferenceRef.current.speakerNames))
 			const answerPromise = llm.ask(question)
 			hotToast.promise(answerPromise, {
 				loading: t('common.summarize-loading'),
@@ -658,6 +742,8 @@ export function viewModel() {
 		setIsRecording,
 		startRecord,
 		stopRecord,
+		startMeeting,
+		meetingMode,
 		preference: preference,
 		openPath,
 		selectFiles,

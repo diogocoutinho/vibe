@@ -68,6 +68,10 @@ export interface Preference {
 	stableTimestampsEnabled: boolean
 	setStableTimestampsEnabled: ModifyState<boolean>
 
+	// Maps a diarization speaker id (0-based) to a custom name. See lib/transcript SpeakerNames.
+	speakerNames: Record<number, string>
+	setSpeakerNames: ModifyState<Record<number, string>>
+
 	gpuDevice: number | null
 	setGpuDevice: ModifyState<number | null>
 
@@ -170,6 +174,7 @@ export function PreferenceProvider({ children }: { children: ReactNode }) {
 	const [recentLanguages, setRecentLanguages] = useLocalStorage<{ code: string; ts: number }[]>('prefs_recent_languages', [])
 	const [diarizeEnabled, setDiarizeEnabled] = useLocalStorage<boolean>('prefs_diarize_enabled', false)
 	const [stableTimestampsEnabled, setStableTimestampsEnabled] = useLocalStorage<boolean>('prefs_stable_timestamps_enabled', false)
+	const [speakerNames, setSpeakerNames] = useLocalStorage<Record<number, string>>('prefs_speaker_names', {})
 	const [gpuDevice, setGpuDevice] = useLocalStorage<number | null>('prefs_gpu_device', null)
 
 	const [analyticsEnabled, setAnalyticsEnabledLocal] = useState(true)
@@ -292,6 +297,8 @@ export function PreferenceProvider({ children }: { children: ReactNode }) {
 		setDiarizeEnabled,
 		stableTimestampsEnabled,
 		setStableTimestampsEnabled,
+		speakerNames,
+		setSpeakerNames,
 		gpuDevice,
 		setGpuDevice,
 		analyticsEnabled,

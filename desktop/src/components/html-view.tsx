@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Segment, formatTimestamp } from '~/lib/transcript'
+import { Segment, SpeakerNames, formatTimestamp, speakerName } from '~/lib/transcript'
 import { NamedPath } from '~/lib/types'
 import { Preference } from '~/providers/preference'
 
@@ -7,6 +7,7 @@ interface HTMLViewProps {
 	segments: Segment[]
 	file: NamedPath
 	preference: Preference
+	speakerNames?: SpeakerNames
 }
 
 export function formatDuration(start: number, stop: number, direction: 'rtl' | 'ltr' = 'ltr') {
@@ -20,7 +21,7 @@ export function formatDuration(start: number, stop: number, direction: 'rtl' | '
 	return duration
 }
 
-export default function HTMLView({ segments, file, preference }: HTMLViewProps) {
+export default function HTMLView({ segments, file, preference, speakerNames }: HTMLViewProps) {
 	const { t } = useTranslation()
 	return (
 		<div
@@ -49,7 +50,7 @@ export default function HTMLView({ segments, file, preference }: HTMLViewProps) 
 							{formatDuration(segment.start, segment.stop)}
 							{segment.speaker != null && (
 								<span style={{ marginLeft: '8px', fontWeight: 600 }}>
-									{t('common.speaker-prefix')} {segment.speaker + 1}
+									{speakerName(segment.speaker, t('common.speaker-prefix'), speakerNames)}
 								</span>
 							)}
 						</div>
