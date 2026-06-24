@@ -1,5 +1,5 @@
 <p align="center">
-  <a target="blank" href="https://github.com/thewh1teagle/vibe">
+  <a target="blank" href="https://github.com/diogocoutinho/vibe">
     <img
         width="96px"
         alt="Vibe logo"
@@ -16,11 +16,11 @@
 </p>
 
 <p align="center">
-  <a target="_blank" href="https://thewh1teagle.github.io/vibe/">
+  <a target="_blank" href="https://diogocoutinho.github.io/vibe/">
     🔗 Download Vibe
   </a>
     &nbsp; | &nbsp; Give it a Star ⭐ | &nbsp;
-    <a target="_blank" href="https://thewh1teagle.github.io/vibe/?action=support-vibe">Support the project 🤝</a>
+    <a target="_blank" href="https://diogocoutinho.github.io/vibe/?action=support-vibe">Support the project 🤝</a>
 </p>
 
 <hr />
@@ -28,8 +28,8 @@
 ## Screenshots
 
 <p align="center">
-	<a target="_blank" href="https://thewh1teagle.github.io/vibe/">
-    	<img width=600 src="https://github.com/thewh1teagle/vibe/assets/61390950/22779ac6-9e49-4c21-b528-29647f039da2">
+	<a target="_blank" href="https://diogocoutinho.github.io/vibe/">
+    	<img width=600 src="https://github.com/diogocoutinho/vibe/assets/61390950/22779ac6-9e49-4c21-b528-29647f039da2">
 	</a>
 </p>
 
@@ -79,8 +79,8 @@ In addition, you're welcome to add translations.
 
 We would like to express our sincere gratitude to all the contributors.
 
-<a href="https://github.com/thewh1teagle/vibe/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=thewh1teagle/vibe" />
+<a href="https://github.com/diogocoutinho/vibe/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=diogocoutinho/vibe" />
 </a>
 
 # Community
@@ -97,11 +97,11 @@ You can see the roadmap in [Vibe-Roadmap](https://github.com/users/thewh1teagle/
 2. Change every value in the files there, to the new language and keep the keys as is
 3. create PR / issue in Github
 
-In addition you can add translation to [Vibe website](https://thewh1teagle.github.io/vibe/) by creating new files in the `landing/static/locales`.
+In addition you can add translation to [Vibe website](https://diogocoutinho.github.io/vibe/) by creating new files in the `landing/static/locales`.
 
 # Docs 📄
 
-see [Vibe Docs](https://github.com/thewh1teagle/vibe/tree/main/docs)
+see [Vibe Docs](https://github.com/diogocoutinho/vibe/tree/main/docs)
 
 # I want to know more!
 
@@ -109,11 +109,11 @@ Medium [post](https://medium.com/@thewh1teagle/creating-vibe-multilingual-audio-
 
 # Issue report
 
-You can open [new issue](https://github.com/thewh1teagle/vibe/issues/new?assignees=octocat&labels=bug&projects=&template=bug_report.yaml&title=[Short+title]) and it's recommend to check [debug.md](docs/debug.md) first.
+You can open [new issue](https://github.com/diogocoutinho/vibe/issues/new?assignees=octocat&labels=bug&projects=&template=bug_report.yaml&title=[Short+title]) and it's recommend to check [debug.md](docs/debug.md) first.
 
 # Privacy Policy 🔒
 
-Your privacy is important to us. Please review our [Privacy Policy](http://thewh1teagle.github.io/vibe/?action=open-privacy-policy) to understand how we handle your data.
+Your privacy is important to us. Please review our [Privacy Policy](http://diogocoutinho.github.io/vibe/?action=open-privacy-policy) to understand how we handle your data.
 
 # Credits
 

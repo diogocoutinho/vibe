@@ -24,7 +24,7 @@ What's new? 🎉📣
 - 🔠 Max letters per sentence! (Thanks for @sdimantsd)
 - 🎮 Choose GPU device (Thanks for @israelxss for the suggestion!)
 
-**Full Changelog**: https://github.com/thewh1teagle/vibe/compare/v0.0.0...v0.0.1
+**Full Changelog**: https://github.com/diogocoutinho/vibe/compare/v0.0.0...v0.0.1
 """
 
 

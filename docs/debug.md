@@ -2,7 +2,7 @@
 
 Try the following, the more you try the better the chance we'll find the cause :)
 
-1. Is the audio file valid? try with different one, eg. download [vibe/samples/single.wav](https://github.com/thewh1teagle/vibe/raw/main/samples/single.wav)
+1. Is the audio file valid? try with different one, eg. download [vibe/samples/single.wav](https://github.com/diogocoutinho/vibe/raw/main/samples/single.wav)
 2. Do you have errors? report it with the 'report button'
 3. Do you experience crash without errors? try to run from the terminal with logs enabled:
 4. Do you use other model than the default one? Please use the default one that comes with Vibe when checking.
@@ -44,11 +44,11 @@ Does it happens with original Whisper?
 
 1. Download one of the `zip` files from [releases/tag/v1.6.0](https://github.com/ggerganov/whisper.cpp/releases/tag/v1.6.0) (Scroll down and choose `whisper-bin-x64.zip` in `Windows`
 2. Extract them and open the folder, then open explorer in that folder and hit `Ctrl` + `l` in `explorer, type `cmd` and enter
-3. Download [vibe/samples/single.wav](https://github.com/thewh1teagle/vibe/raw/main/samples/single.wav) and place it in the same folder (and check that the file is ok)
+3. Download [vibe/samples/single.wav](https://github.com/diogocoutinho/vibe/raw/main/samples/single.wav) and place it in the same folder (and check that the file is ok)
 4. Try to transcribe by execute
 
 ```console
-main.exe -m "%localappdata%\github.com.thewh1teagle.vibe\ggml-medium.bin" -f "samples_single.wav"
+main.exe -m "%localappdata%\github.com.diogocoutinho.vibe\ggml-medium.bin" -f "samples_single.wav"
 ```
 
 </details>
@@ -64,11 +64,11 @@ In windows, open search menu and search for `Event Viewer`, choose `Windows Logs
 <summary>Find debug log file</summary>
 If you can't open the app due to crash, try to check any logs in
 
-macOS: `$HOME/Library/Application Support/github.com.thewh1teagle.vibe`
+macOS: `$HOME/Library/Application Support/github.com.diogocoutinho.vibe`
 
-Windows: `%appdata%\github.com.thewh1teagle.vibe`
+Windows: `%appdata%\github.com.diogocoutinho.vibe`
 
-Linux: `~/.config/github.com/thewh1teagle.vibe`
+Linux: `~/.config/github.com/diogocoutinho.vibe`
 
 </details>
 
@@ -113,4 +113,4 @@ For `vulkan-1.dll` install [VulkanRT-Installer.exe](https://sdk.lunarg.com/sdk/d
 
 </details>
 
-After you finished, share you results by opening [new issue](https://github.com/thewh1teagle/vibe/issues/new?assignees=octocat&labels=bug&projects=&template=bug_report.yaml&title=[Short+title]) or just comment in the issue.
+After you finished, share you results by opening [new issue](https://github.com/diogocoutinho/vibe/issues/new?assignees=octocat&labels=bug&projects=&template=bug_report.yaml&title=[Short+title]) or just comment in the issue.

@@ -107,7 +107,7 @@ export default function Cta({ onOpenKofi }: CtaProps) {
 				) : null}
 
 				<Button variant="outline" asChild>
-					<a href="https://github.com/thewh1teagle/vibe" target="_blank" rel="noreferrer">
+					<a href="https://github.com/diogocoutinho/vibe" target="_blank" rel="noreferrer">
 						<Github width="18" height="18" />
 						{t('star-on-github')}
 					</a>

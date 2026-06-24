@@ -3,13 +3,13 @@ description: Suggest an idea for this project
 title: '[Title here. keep it short]'
 labels: ['feature']
 assignees:
-    - thewh1teagle
+    - diogocoutinho
 body:
     - type: markdown
       attributes:
           value: |
               💚💜 Thank you for interest. ❤️💛
-              *Please prioritize checking existing issues first*. [features](https://github.com/thewh1teagle/vibe/issues?q=is:issue+label:feature+)
+              *Please prioritize checking existing issues first*. [features](https://github.com/diogocoutinho/vibe/issues?q=is:issue+label:feature+)
               I will repay with higher-quality code.
               
     - type: textarea

@@ -64,21 +64,21 @@ If you need translation, download a supported model from the [models docs](/vibe
 
 ## Manual Install 🛠️
 
-`MacOS Apple silicon`: install `aarch64.dmg` file from [releases](https://github.com/thewh1teagle/vibe/releases) **Don't forget to right click and open from Applications once**
+`MacOS Apple silicon`: install `aarch64.dmg` file from [releases](https://github.com/diogocoutinho/vibe/releases) **Don't forget to right click and open from Applications once**
 
-`MacOS Intel`: install `x64.dmg` file from [releases](https://github.com/thewh1teagle/vibe/releases) **Don't forget to right click and open from Applications once**
+`MacOS Intel`: install `x64.dmg` file from [releases](https://github.com/diogocoutinho/vibe/releases) **Don't forget to right click and open from Applications once**
 
-`Windows`: install `.exe` file from [releases](https://github.com/thewh1teagle/vibe/releases)
+`Windows`: install `.exe` file from [releases](https://github.com/diogocoutinho/vibe/releases)
 
-`Linux`: install `.deb` from [releases](https://github.com/thewh1teagle/vibe/releases) (`Arch` users can use [debtap](https://aur.archlinux.org/packages/debtap))
+`Linux`: install `.deb` from [releases](https://github.com/diogocoutinho/vibe/releases) (`Arch` users can use [debtap](https://aur.archlinux.org/packages/debtap))
 
-_All models available for manual install. see [Pre built models](https://github.com/thewh1teagle/vibe/releases/tag/v0.0.1)_
+_All models available for manual install. see [Pre built models](https://github.com/diogocoutinho/vibe/releases/tag/v0.0.1)_
 
 ## Offline Setup 💾
 
 Offline installation with Vibe is easy: open the app, cancel the download, and navigate to the `Customize` section within settings.
 
-_All models available for manual install. see settings or [Pre built models](https://github.com/thewh1teagle/vibe/releases/tag/v0.0.1)_
+_All models available for manual install. see settings or [Pre built models](https://github.com/diogocoutinho/vibe/releases/tag/v0.0.1)_
 
 ## Faster transcriptions on macOS (2-3x) 🌟
 
@@ -113,7 +113,7 @@ sudo apt-get install xvfb -y
 Xvfb :1 -screen 0 1024x768x24 &
 export DISPLAY=1
 
-wget https://github.com/thewh1teagle/vibe/releases/download/v0.0.1/ggml-medium.bin
-wget https://github.com/thewh1teagle/vibe/raw/main/samples/single.wav
+wget https://github.com/diogocoutinho/vibe/releases/download/v0.0.1/ggml-medium.bin
+wget https://github.com/diogocoutinho/vibe/raw/main/samples/single.wav
 vibe --model ggml-medium.bin --file single.wav
 ```

@@ -32,7 +32,7 @@ if features.avx2.enabled && !features.avx2.support {
     bail!(
         "Your CPU does not support AVX2 instructions required by this version of Vibe.\n\
          Download the compatible version from:\n\
-         https://github.com/thewh1teagle/vibe/releases/latest"
+         https://github.com/diogocoutinho/vibe/releases/latest"
     );
 }
 ```
