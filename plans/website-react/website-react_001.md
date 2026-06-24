@@ -579,7 +579,7 @@ export default function Cta({ onOpenKofi }: CtaProps) {
 				) : null}
 
 				<Button variant="outline" asChild>
-					<a href="https://github.com/thewh1teagle/vibe" target="_blank">
+					<a href="https://github.com/diogocoutinho/vibe" target="_blank">
 						<Github width="18" height="18" />
 						{t('star-on-github')}
 					</a>
@@ -686,7 +686,7 @@ export default function Nav() {
 				</Button>
 			</div>
 			<ul className="flex-none px-1" dir="ltr">
-				<a href="https://github.com/thewh1teagle/vibe" target="_blank">
+				<a href="https://github.com/diogocoutinho/vibe" target="_blank">
 					<Github width="28" height="28" />
 				</a>
 			</ul>
@@ -737,7 +737,7 @@ export default function Footer({ onOpenKofi, onOpenPrivacyPolicy }: FooterProps)
 			</nav>
 			<nav className="mt-6">
 				<div className="flex items-center gap-4">
-					<a href="https://github.com/thewh1teagle/vibe" target="_blank">
+					<a href="https://github.com/diogocoutinho/vibe" target="_blank">
 						<Github width="24" height="24" />
 					</a>
 					<div className="h-6 w-px bg-border" />

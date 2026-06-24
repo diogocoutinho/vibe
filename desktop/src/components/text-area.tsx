@@ -3,7 +3,7 @@ import * as fs from '@tauri-apps/plugin-fs'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AlignRight, Check, Copy, Download, Printer } from 'lucide-react'
-import { Segment, asCsv, asJson, asSrt, asText, asVtt } from '~/lib/transcript'
+import { Segment, SpeakerNames, asCsv, asJson, asSrt, asText, asVtt } from '~/lib/transcript'
 import { NamedPath } from '~/lib/types'
 import { openPath } from '~/lib/app'
 import { cn } from '~/lib/style'
@@ -67,6 +67,7 @@ export default function TextArea({
 	file,
 	textFormat,
 	setTextFormat,
+	speakerNames,
 }: {
 	segments: Segment[] | null
 	readonly: boolean
@@ -74,29 +75,31 @@ export default function TextArea({
 	file: NamedPath
 	textFormat: TextFormat
 	setTextFormat: Dispatch<SetStateAction<TextFormat>>
+	speakerNames?: SpeakerNames
 }) {
 	const { t } = useTranslation()
 	const preference = usePreferenceProvider()
 	const [text, setText] = useState('')
 
 	const speakerLabel = t('common.speaker-prefix')
+	const speakerNamesKey = JSON.stringify(speakerNames ?? {})
 	useEffect(() => {
 		if (segments) {
 			setText(
 				textFormat === 'vtt'
-					? asVtt(segments, speakerLabel)
+					? asVtt(segments, speakerLabel, speakerNames)
 					: textFormat === 'srt'
-						? asSrt(segments, speakerLabel)
+						? asSrt(segments, speakerLabel, speakerNames)
 						: textFormat === 'json'
-							? asJson(segments)
+							? asJson(segments, speakerNames)
 							: textFormat === 'csv'
-								? asCsv(segments)
-							: asText(segments, speakerLabel),
+								? asCsv(segments, speakerLabel, speakerNames)
+							: asText(segments, speakerLabel, speakerNames),
 			)
 		} else {
 			setText('')
 		}
-	}, [textFormat, segments, speakerLabel])
+	}, [textFormat, segments, speakerLabel, speakerNamesKey])
 
 	async function download(textToSave: string, format: TextFormat, srcFile: NamedPath) {
 		if (format === 'html') {
@@ -119,7 +122,7 @@ export default function TextArea({
 
 		if (format === 'docx') {
 			const fileName = await path.basename(filePath)
-			const doc = await toDocx(fileName, segments!, preference.textAreaDirection, speakerLabel)
+			const doc = await toDocx(fileName, segments!, preference.textAreaDirection, speakerLabel, speakerNames)
 			const arrayBuffer = await doc.arrayBuffer()
 			await fs.writeFile(filePath, new Uint8Array(arrayBuffer))
 		} else {
@@ -195,7 +198,7 @@ export default function TextArea({
 
 			{['html', 'pdf', 'docx'].includes(textFormat) ? (
 				<div className="transcript-editor min-h-0 flex-1 overflow-x-hidden overflow-y-auto rounded-bl-lg rounded-br-lg border-x border-b border-input/70 bg-card">
-					<HTMLView preference={preference} segments={segments ?? []} file={file} />
+					<HTMLView preference={preference} segments={segments ?? []} file={file} speakerNames={speakerNames} />
 				</div>
 			) : textFormat === 'md' ? (
 				<div

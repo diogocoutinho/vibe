@@ -43,42 +43,52 @@ export function formatTimestamp(seconds: number, alwaysIncludeHours: boolean, de
 	return result
 }
 
-function speakerPrefix(segment: Segment, label: string): string {
-	return segment.speaker != null ? `[${label} ${segment.speaker + 1}] ` : ''
+// Maps a speaker id (0-based, as returned by diarization) to a human chosen name.
+export type SpeakerNames = Record<number, string>
+
+// Resolve the display name for a speaker: a custom name when set, otherwise "Label N".
+export function speakerName(speaker: number, label: string, names?: SpeakerNames): string {
+	const custom = names?.[speaker]?.trim()
+	return custom ? custom : `${label} ${speaker + 1}`
 }
 
-export function asSrt(segments: Segment[], speakerLabel: string = 'Speaker') {
+function speakerPrefix(segment: Segment, label: string, names?: SpeakerNames): string {
+	return segment.speaker != null ? `[${speakerName(segment.speaker, label, names)}] ` : ''
+}
+
+export function asSrt(segments: Segment[], speakerLabel: string = 'Speaker', names?: SpeakerNames) {
 	return segments.reduce((transcript, segment, i) => {
 		return (
 			transcript +
 			`${i > 0 ? '\n' : ''}${i + 1}\n` +
 			`${formatTimestamp(segment.start, true, ',')} --> ${formatTimestamp(segment.stop, true, ',')}\n` +
-			`${speakerPrefix(segment, speakerLabel)}${segment.text.trim().replace('-->', '->')}\n`
+			`${speakerPrefix(segment, speakerLabel, names)}${segment.text.trim().replace('-->', '->')}\n`
 		)
 	}, '')
 }
 
-export function asVtt(segments: Segment[], speakerLabel: string = 'Speaker') {
+export function asVtt(segments: Segment[], speakerLabel: string = 'Speaker', names?: SpeakerNames) {
 	return segments.reduce((transcript, segment) => {
 		return (
 			transcript +
 			`${formatTimestamp(segment.start, false, '.')} --> ${formatTimestamp(segment.stop, false, '.')}\n` +
-			`${speakerPrefix(segment, speakerLabel)}${segment.text.trim().replace('-->', '->')}\n`
+			`${speakerPrefix(segment, speakerLabel, names)}${segment.text.trim().replace('-->', '->')}\n`
 		)
 	}, '')
 }
 
-export function asText(segments: Segment[], speakerLabel: string = 'Speaker') {
+export function asText(segments: Segment[], speakerLabel: string = 'Speaker', names?: SpeakerNames) {
 	return segments.reduce((transcript, segment) => {
-		return transcript + `${speakerPrefix(segment, speakerLabel)}${segment.text.trim()}\n`
+		return transcript + `${speakerPrefix(segment, speakerLabel, names)}${segment.text.trim()}\n`
 	}, '')
 }
 
-export function asJson(segments: Segment[]) {
+export function asJson(segments: Segment[], names?: SpeakerNames) {
 	return JSON.stringify(segments.map(s => ({
 		...s,
 		start: s.start / 100,
 		stop: s.stop / 100,
+		...(s.speaker != null && names?.[s.speaker]?.trim() ? { speaker_name: names[s.speaker].trim() } : {}),
 	})), null, 4)
 }
 
@@ -86,7 +96,7 @@ function escapeCsv(value: string) {
 	return `"${value.replace(/"/g, '""')}"`
 }
 
-export function asCsv(segments: Segment[]) {
+export function asCsv(segments: Segment[], speakerLabel: string = 'Speaker', names?: SpeakerNames) {
 	const hasSpeakers = segments.some((s) => s.speaker != null)
 	const header = hasSpeakers ? 'start,end,speaker,text' : 'start,end,text'
 	const rows = segments.map((segment) => {
@@ -94,7 +104,7 @@ export function asCsv(segments: Segment[]) {
 		const end = formatTimestamp(segment.stop, true, '.')
 		const text = segment.text.trim()
 		if (hasSpeakers) {
-			const speaker = segment.speaker != null ? String(segment.speaker + 1) : ''
+			const speaker = segment.speaker != null ? speakerName(segment.speaker, speakerLabel, names) : ''
 			return `${escapeCsv(start)},${escapeCsv(end)},${escapeCsv(speaker)},${escapeCsv(text)}`
 		}
 		return `${escapeCsv(start)},${escapeCsv(end)},${escapeCsv(text)}`

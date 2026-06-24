@@ -50,7 +50,7 @@ There is no encryption involved in the app. Users have complete control over whe
 
 **Vibe** may include links to external websites, such as:
 
-- [GitHub](https://github.com/thewh1teagle/vibe)
+- [GitHub](https://github.com/diogocoutinho/vibe)
 - [Ko-Fi](https://ko-fi.com/thewh1teagle)
 
 These websites may collect personal data according to their respective privacy policies. Please review those policies before interacting with external sites.
@@ -59,7 +59,7 @@ These websites may collect personal data according to their respective privacy p
 
 ### 7. Open Source
 
-**Vibe** is an open-source application, and the source code is available at [github.com/thewh1teagle/vibe](https://github.com/thewh1teagle/vibe).
+**Vibe** is an open-source application, and the source code is available at [github.com/diogocoutinho/vibe](https://github.com/diogocoutinho/vibe).
 
 ---
 
@@ -71,4 +71,4 @@ We may update this Privacy Policy as needed. Any changes will be communicated th
 
 ### 9. Contact Us
 
-If you have any questions or concerns about this Privacy Policy, please reach out via [GitHub Issues](https://github.com/thewh1teagle/vibe/issues).
+If you have any questions or concerns about this Privacy Policy, please reach out via [GitHub Issues](https://github.com/diogocoutinho/vibe/issues).

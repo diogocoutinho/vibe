@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 
 import httpx
 
-ASSETS_URL = "https://api.github.com/repos/thewh1teagle/vibe/releases"
+ASSETS_URL = "https://api.github.com/repos/diogocoutinho/vibe/releases"
 PATTERNS = [".exe", ".dmg", ".deb", ".rpm"]
 PATTERN_NAMES = {
     ".exe": "Windows",

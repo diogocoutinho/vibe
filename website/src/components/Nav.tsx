@@ -18,7 +18,7 @@ export default function Nav() {
 				</Button>
 			</div>
 			<ul className="flex-none px-1" dir="ltr">
-				<a href="https://github.com/thewh1teagle/vibe" target="_blank" rel="noreferrer">
+				<a href="https://github.com/diogocoutinho/vibe" target="_blank" rel="noreferrer">
 					<Github width="28" height="28" />
 				</a>
 			</ul>

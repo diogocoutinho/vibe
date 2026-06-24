@@ -7,8 +7,8 @@
 # Usage:
 # ./installer.sh {tag}
 
-# Available at https://thewh1teagle.github.io/vibe/installer.sh
-# Via curl -sSf https://thewh1teagle.github.io/vibe/installer.sh | sh -s {tag}
+# Available at https://diogocoutinho.github.io/vibe/installer.sh
+# Via curl -sSf https://diogocoutinho.github.io/vibe/installer.sh | sh -s {tag}
 
 set -e
 
@@ -41,8 +41,8 @@ esac
 # Determine the package type and download the appropriate file
 echo "Downloading Vibe version $TAG for $ARCH..."
 
-RPM_URL="https://github.com/thewh1teagle/vibe/releases/download/${TAG}/vibe-${TAG_WITHOUT_V}-1.${RPM_ARCH}.rpm"
-DEB_URL="https://github.com/thewh1teagle/vibe/releases/download/${TAG}/vibe_${TAG_WITHOUT_V}_${DEB_ARCH}.deb"
+RPM_URL="https://github.com/diogocoutinho/vibe/releases/download/${TAG}/vibe-${TAG_WITHOUT_V}-1.${RPM_ARCH}.rpm"
+DEB_URL="https://github.com/diogocoutinho/vibe/releases/download/${TAG}/vibe_${TAG_WITHOUT_V}_${DEB_ARCH}.deb"
 echo $RPM_URL
 # Create temporary directory for downloading
 TEMP_DIR=$(mktemp -d)

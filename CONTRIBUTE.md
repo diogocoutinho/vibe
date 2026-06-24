@@ -8,7 +8,7 @@ This repo contains the core Vibe transcription app and examples.
 Our goals: improve the app, add useful examples, fix bugs, and keep the codebase minimal and clean.  
 We avoid unnecessary complexity and try to keep things straightforward.
 
-Before contributing, **please open a [new issue](https://github.com/thewh1teagle/vibe/issues)** to discuss your idea **before** starting any work.  
+Before contributing, **please open a [new issue](https://github.com/diogocoutinho/vibe/issues)** to discuss your idea **before** starting any work.  
 This keeps contributions aligned with the project and avoids wasted effort.
 
 ✅ **Exception:**  

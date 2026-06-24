@@ -1,15 +1,15 @@
 # Vibe
 
-Official website: https://thewh1teagle.github.io/vibe/
-Project repository: https://github.com/thewh1teagle/vibe
+Official website: https://diogocoutinho.github.io/vibe/
+Project repository: https://github.com/diogocoutinho/vibe
 
 Vibe is a local-first transcription app for audio and video.
 
 Key pages:
-- Home: https://thewh1teagle.github.io/vibe/
-- Features: https://thewh1teagle.github.io/vibe/features
-- Documentation: https://thewh1teagle.github.io/vibe/docs
-- Privacy Policy: https://thewh1teagle.github.io/vibe/privacy_policy.pdf
+- Home: https://diogocoutinho.github.io/vibe/
+- Features: https://diogocoutinho.github.io/vibe/features
+- Documentation: https://diogocoutinho.github.io/vibe/docs
+- Privacy Policy: https://diogocoutinho.github.io/vibe/privacy_policy.pdf
 
 Key capabilities:
 - Audio and video transcription
